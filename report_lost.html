@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Lost Item</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="/dashboard" class="brand">
+            <div class="brand-icon">⌖</div>
+            <div class="brand-text">Lost<span>&Found</span></div>
+        </a>
+
+        <div class="nav-links">
+            <a href="/dashboard">Home</a>
+            <a href="/items">Browse</a>
+            <a href="/my-claims">My Claims</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="form-page">
+
+        <div class="form-card">
+
+            <h1>Report Lost Item</h1>
+            <p>Provide the details of the item you lost.</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label>Item Name</label>
+                    <input type="text" name="item_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" name="item_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Item Image</label>
+                    <input type="file" name="photo" accept="image/*">
+                </div>
+
+                <button type="submit" class="btn btn-lost">
+                    Submit Lost Report →
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

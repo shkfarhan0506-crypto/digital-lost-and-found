@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | Digital Lost & Found</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-inner">
+
+        <a href="/admin-dashboard" class="brand">
+
+            <div class="brand-icon">
+                ⌖
+            </div>
+
+            <div class="brand-text">
+                Digital Lost <span>& Found</span>
+            </div>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin-reports">
+                Reports
+            </a>
+
+            <a href="/admin-logout">
+                Logout
+            </a>
+
+        </div>
+
+        <div class="menu-btn">
+            ☰
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+    <div class="container">
+
+
+        <div class="dashboard-header">
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Welcome, {{ name }}. Manage claim verification
+                and Digital Lost & Found system records.
+            </p>
+
+        </div>
+
+
+        <!-- SYSTEM OVERVIEW -->
+
+        <div class="admin-stats">
+
+
+            <div class="admin-stat">
+
+                <span>
+                    Registered Users
+                </span>
+
+                <strong>
+                    {{ total_users }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-stat">
+
+                <span>
+                    Lost Items
+                </span>
+
+                <strong>
+                    {{ total_lost }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-stat">
+
+                <span>
+                    Found Items
+                </span>
+
+                <strong>
+                    {{ total_found }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-stat">
+
+                <span>
+                    Pending Claims
+                </span>
+
+                <strong>
+                    {{ pending_claims }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- CLAIM REQUESTS -->
+
+        <div class="page-header">
+
+            <h1>
+                Claim Requests
+            </h1>
+
+            <p>
+                Review and verify submitted claims.
+            </p>
+
+        </div>
+
+
+        {% if claims %}
+
+            {% for claim in claims %}
+
+                <div class="card claim-card">
+
+
+                    <div class="claim-header">
+
+                        <div>
+
+                            <h2>
+                                Claim #{{ claim.id }}
+                            </h2>
+
+                            <h3>
+                                {{ claim.item_name }}
+                            </h3>
+
+                        </div>
+
+
+                        <span class="status
+                            {% if claim.status == 'Pending' %}
+                                status-pending
+                            {% elif claim.status == 'Approved' %}
+                                status-approved
+                            {% else %}
+                                status-rejected
+                            {% endif %}
+                        ">
+
+                            {{ claim.status }}
+
+                        </span>
+
+                    </div>
+
+
+                    {% if claim.photo %}
+
+                        <img
+                            class="claim-image"
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/' + claim.photo
+                            ) }}"
+                            alt="Claimed Item"
+                        >
+
+                    {% endif %}
+
+
+                    <p>
+                        <strong>User:</strong>
+                        {{ claim.user_name }}
+                    </p>
+
+
+                    <p>
+                        <strong>Email:</strong>
+                        {{ claim.user_email }}
+                    </p>
+
+
+                    <p>
+                        <strong>Item:</strong>
+                        {{ claim.item_name }}
+                    </p>
+
+
+                    <p>
+                        <strong>Description:</strong>
+                        {{ claim.description }}
+                    </p>
+
+
+                    <p>
+                        <strong>Location Found:</strong>
+                        {{ claim.location }}
+                    </p>
+
+
+                    <p>
+                        <strong>Claim Reason:</strong>
+                        {{ claim.claim_reason }}
+                    </p>
+
+
+                    <div class="claim-date">
+
+                        <span class="claim-date-icon">
+                            ◷
+                        </span>
+
+                        <span>
+                            {{ claim.claim_date }}
+                        </span>
+
+                    </div>
+
+
+                    {% if claim.status == "Pending" %}
+
+                        <div class="hero-actions"
+                             style="justify-content:flex-start; margin:20px 0 0;">
+
+                            <a
+                                href="/admin/claim/{{ claim.id }}/approve"
+                                class="btn btn-success"
+                            >
+                                Approve Claim
+                            </a>
+
+
+                            <a
+                                href="/admin/claim/{{ claim.id }}/reject"
+                                class="btn btn-danger"
+                            >
+                                Reject Claim
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <div class="card empty-state">
+
+                <h3>
+                    No Claim Requests
+                </h3>
+
+                <p>
+                    There are currently no claim requests
+                    to review.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+</main>
+
+
+<footer>
+    Digital Lost & Found System — Administrator
+</footer>
+
+
+</body>
+
+</html>

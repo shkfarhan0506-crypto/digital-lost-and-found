@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Claims | Digital Lost & Found</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="nav-inner">
+
+        <a class="brand" href="/dashboard">
+
+            <div class="brand-icon">
+                ⌖
+            </div>
+
+            <div class="brand-text">
+                Digital Lost <span>& Found</span>
+            </div>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/items">
+                Items
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+
+        <div class="menu-btn">
+            ☰
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+    <div class="container">
+
+
+        <div class="page-header">
+
+            <h1>
+                My Claim Requests
+            </h1>
+
+            <p>
+                Track the status of your submitted claims.
+            </p>
+
+        </div>
+
+
+        {% if claims %}
+
+
+            {% for claim in claims %}
+
+                <div class="card claim-card">
+
+
+                    <div class="claim-header">
+
+                        <div>
+
+                            <h2>
+                                Claim #{{ claim.id }}
+                            </h2>
+
+                            <h3>
+                                {{ claim.item_name }}
+                            </h3>
+
+                        </div>
+
+
+                        <span class="status
+                            {% if claim.status == 'Pending' %}
+                                status-pending
+                            {% elif claim.status == 'Approved' %}
+                                status-approved
+                            {% else %}
+                                status-rejected
+                            {% endif %}
+                        ">
+
+                            {{ claim.status }}
+
+                        </span>
+
+                    </div>
+
+
+                    {% if claim.photo %}
+
+                        <img
+                            class="claim-image"
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/' + claim.photo
+                            ) }}"
+                            alt="Item Photo"
+                        >
+
+                    {% endif %}
+
+
+                    <p>
+                        <strong>Description:</strong>
+                        {{ claim.description }}
+                    </p>
+
+
+                    <p>
+                        <strong>Location:</strong>
+                        {{ claim.location }}
+                    </p>
+
+
+                    <p>
+                        <strong>My Claim Reason:</strong>
+                        {{ claim.claim_reason }}
+                    </p>
+
+
+                    <div class="claim-date">
+
+                        <span class="claim-date-icon">
+                            ◷
+                        </span>
+
+                        <span>
+                            {{ claim.claim_date }}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="card empty-state">
+
+                <h3>
+                    No claims yet
+                </h3>
+
+                <p>
+                    You have not submitted any claims.
+                </p>
+
+
+                <div class="browse-wrapper">
+
+                    <a
+                        class="btn browse-btn"
+                        href="/items"
+                    >
+                        Browse Items
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+</main>
+
+
+<footer>
+    Digital Lost & Found System
+</footer>
+
+
+</body>
+
+</html>

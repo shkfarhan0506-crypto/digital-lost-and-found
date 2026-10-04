@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | Digital Lost & Found</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-inner">
+
+        <a href="/admin-dashboard"
+           class="brand">
+
+            <div class="brand-icon">
+                ⌖
+            </div>
+
+            <div class="brand-text">
+                Digital Lost <span>& Found</span>
+            </div>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin-reports">
+                Reports
+            </a>
+
+            <a href="/admin-logout">
+                Logout
+            </a>
+
+        </div>
+
+
+        <div class="menu-btn">
+            ☰
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+    <div class="container">
+
+
+        <div class="back-row">
+
+            <a href="/admin-dashboard"
+               class="back-button">
+
+                <span class="back-arrow">
+                    ←
+                </span>
+
+                Back to Dashboard
+
+            </a>
+
+        </div>
+
+
+        <div class="page-header">
+
+            <h1>
+                Reports & Statistics
+            </h1>
+
+            <p>
+                Overview of the Digital Lost & Found
+                system's current records.
+            </p>
+
+        </div>
+
+
+        <!-- DOWNLOAD REPORT -->
+
+        <div class="report-download-box">
+
+            <div>
+
+                <h3>
+                    Generate System Report
+                </h3>
+
+                <p>
+                    Download the current system statistics
+                    and claim details as a PDF report.
+                </p>
+
+            </div>
+
+
+            <a
+                href="/admin-reports/download"
+                class="btn btn-primary"
+            >
+                Download PDF Report
+            </a>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="admin-stats">
+
+
+            <div class="admin-stat">
+
+                <span>
+                    Lost Items
+                </span>
+
+                <strong>
+                    {{ total_lost }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-stat">
+
+                <span>
+                    Found Items
+                </span>
+
+                <strong>
+                    {{ total_found }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-stat">
+
+                <span>
+                    Total Claims
+                </span>
+
+                <strong>
+                    {{ total_claims }}
+                </strong>
+
+            </div>
+
+
+            <div class="admin-stat">
+
+                <span>
+                    Registered Users
+                </span>
+
+                <strong>
+                    {{ total_users }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- CLAIM STATUS -->
+
+        <div class="card report-card">
+
+            <h2>
+                Claim Status
+            </h2>
+
+
+            <div class="report-status-grid">
+
+
+                <div>
+
+                    <span>
+                        Pending
+                    </span>
+
+                    <strong>
+                        {{ pending_claims }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Approved
+                    </span>
+
+                    <strong>
+                        {{ approved_claims }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Rejected
+                    </span>
+
+                    <strong>
+                        {{ rejected_claims }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<footer>
+    Digital Lost & Found System — Administrator
+</footer>
+
+
+</body>
+
+</html>

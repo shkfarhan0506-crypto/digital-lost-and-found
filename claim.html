@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Claim Item | Digital Lost & Found</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a class="brand" href="/dashboard">
+        Digital Lost & Found
+    </a>
+
+    <div class="nav-links">
+        <a href="/items">Items</a>
+        <a href="/my-claims">My Claims</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+</nav>
+
+<div class="container narrow">
+
+    <div class="page-header">
+        <h1>Claim Item</h1>
+        <p>Review the item and submit your claim.</p>
+    </div>
+
+    <div class="card">
+
+        <h2>{{ item.item_name }}</h2>
+
+        {% if item.photo %}
+
+            <img
+                src="{{ url_for('static', filename='uploads/' + item.photo) }}"
+                alt="Item Photo"
+            >
+
+        {% endif %}
+
+        <p>
+            <strong>Description:</strong>
+            {{ item.description }}
+        </p>
+
+        <p class="meta">
+            Location: {{ item.location }}
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Submit Claim Request</h3>
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label>
+                    Why do you believe this item belongs to you?
+                </label>
+
+                <textarea
+                    name="claim_reason"
+                    placeholder="Provide details that can help verify your ownership..."
+                    required
+                ></textarea>
+
+            </div>
+
+            <button type="submit">
+                Submit Claim
+            </button>
+
+        </form>
+
+    </div>
+
+    <a class="back-link" href="/items">
+        ← Back to Items
+    </a>
+
+</div>
+
+</body>
+</html>

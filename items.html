@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Items</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+
+        <a href="/dashboard" class="brand">
+            <div class="brand-icon">⌖</div>
+            <div class="brand-text">Lost<span>&Found</span></div>
+        </a>
+
+        <div class="nav-links">
+            <a href="/dashboard">Home</a>
+            <a href="/report-lost">Report Lost</a>
+            <a href="/report-found">Report Found</a>
+            <a href="/my-claims">My Claims</a>
+            <a href="/logout">Logout</a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="dashboard-header">
+        <h1>Browse Lost & Found Items</h1>
+        <p>Search and find items reported by users.</p>
+    </div>
+
+    <form method="GET" action="/items" class="search-panel">
+
+        <div class="search-grid">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search item name, description or location..."
+                value="{{ request.args.get('search', '') }}"
+            >
+
+            <select name="type">
+                <option value="">All Items</option>
+                <option value="Lost">Lost</option>
+                <option value="Found">Found</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">
+                Search
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <div class="item-grid">
+
+        {% for item in items %}
+
+        <div class="item-card">
+
+            {% if item.photo %}
+                <img
+                    class="item-image"
+                    src="{{ url_for('static', filename='uploads/' + item.photo) }}"
+                    alt="{{ item.item_name }}"
+                >
+            {% else %}
+                <div class="item-image-empty">⌖</div>
+            {% endif %}
+
+            <div class="item-body">
+
+                <div class="item-top">
+
+                    {% if item.item_type == 'Lost' %}
+                        <span class="status status-lost">LOST</span>
+                    {% else %}
+                        <span class="status status-found">FOUND</span>
+                    {% endif %}
+
+                    <span class="status status-found">VERIFIED</span>
+
+                </div>
+
+                <h3>{{ item.item_name }}</h3>
+
+                <p>{{ item.description }}</p>
+
+                <div class="item-meta">
+                    <span class="tag">⌖ {{ item.location }}</span>
+                    <span class="tag">◷ {{ item.item_date }}</span>
+                </div>
+
+                {% if item.item_type == 'Found' %}
+                    <br>
+                    <a href="/claim/{{ item.id }}" class="btn btn-primary">
+                        Claim This Item →
+                    </a>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="card" style="padding:30px; grid-column:1/-1;">
+            <h3>No items found</h3>
+            <p style="color:#918b9e;">
+                No lost or found items match your search.
+            </p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<footer>
+    Digital Lost & Found System
+</footer>
+
+</body>
+</html>
